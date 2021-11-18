@@ -4,22 +4,41 @@
 //       * Defeat each enemy-robot
 // "LOSE" - Player robot's health is zero or less]
 
+var fightOrSkip = function(){
+    // ask player if they want to fight or skip 
+    var promptFight = window.prompt('Would you like to FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
+    promptFight = promptFight.toLocaleLowerCase();
+
+    // enter the conditional recursive function call here!
+    if (promptFight === "skip"){
+        // confirm player wants to skip
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+        
+        //if yes(true), leave fight
+        if (confirmSkip){
+            window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!" );
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+            //subtract money from playerMoney for skipping 
+            playerInfo.money = playerInfo.money - 10;
+            return true;
+        }
+    }
+    else if(promptFight === "fight"){
+        return false;
+    }
+    else{
+        window.alert("Invalid response! Please try again. ");
+        fightOrSkip();
+    }
+};
+
 var fight = function(enemy) {
     while(enemy.health > 0 && playerInfo.health > 0){
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-        if (promptFight === "skip" || promptFight === "SKIP"){
-            // confirm player wants to skip
-            var confirmSkip = window.confirm("Are you sure you you'd like to quit? ");
-
-            // if yes (true), leave fight
-            if (confirmSkip){
-                window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
-                // subtract money from player for skipping 
-                playerInfo.money = Math.max(0, playerInfo.money - 10);
-                console.log("playerInfo.money", playerInfo.money);
-                break;
-            }
-        }
+        
+        //ask player if they'd like to fight or skip using fightOr Skip function
+        if(fightOrSkip()){
+            break;
+        }    
 
         // generate random damage value based on player's attack power
         var damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
