@@ -33,7 +33,7 @@ var fightOrSkip = function(){
 };
 
 var fight = function(enemy) {
-    debugger;
+
     var isPlayerTurn = true;
     if (Math.random() > 0.5){
         isPlayerTurn = false;
